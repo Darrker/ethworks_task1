@@ -118,16 +118,17 @@ class Polynomial {
  
     _sort(){
        this.exponentsOrder= [];
-
         for (const [key, value] of Object.entries(this.polynomial)) {
-            if(value === 0){
-                delete this.polynomial[key];
-                return;
+            if(value !== 0){
+                this.exponentsOrder.push(key);
             }
-            this.exponentsOrder.push(key);
+            else{
+                delete this.polynomial[key]
+            }
+            
 
         }
-
+        
         this.exponentsOrder.sort( (a,b) =>{
            return parseFloat(b) - parseFloat(a)
         });
