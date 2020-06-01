@@ -3,23 +3,29 @@
 class Polynomial {
     polynomial = {};
     exponentsOrder =[];
-    regex = /([+-])\s?(\d*x?)\^?([+-])?\s?(\d+)?/g;
+
+   regex = /([+-])\s?(\d*\.?\d*x?)\^?([+-])?\s?(\d*\.?\d*)/g;
     constructor(polynomial){
-        this.analize(polynomial);
+
+        this.add(polynomial);
     }
-    analize(polynomial){
+
+    add(polynomial){
         let regex = this.regex;
         let search;
+        if(/^[\d|x]/g.test(polynomial)){
+            polynomial = `+${polynomial}`;
+        }
         while(search=regex.exec(polynomial)){
-            this.add(search);
+            this._analize(search);
           
         }
     }
-    add(value){
-          let coefficientSymbol = this._ifExist(value[1]) ? value[1] :  '';
-          let coefficient = this._ifExist(value[2]) ? value[2] : false ;
-          let exponentSymbol = this._ifExist(value[3]) ?   value[3] : '' ;
-          let exponent = this._ifExist(value[4]) ? value[4] : false ;
+    _analize(value){
+          let coefficientSymbol = this._ifNotExist(value[1]) ? value[1] :  '';
+          let coefficient = this._ifNotExist(value[2]) ? value[2] : false ;
+          let exponentSymbol = this._ifNotExist(value[3])&& value[3] === '-' ?  value[3] : '' ;
+          let exponent = this._ifNotExist(value[4]) ? value[4] : false ;
         
           if(coefficient){
             var ifCoefficientHasVariable = coefficient.includes('x'); 
@@ -34,7 +40,7 @@ class Polynomial {
                  }
 
                  if(exponent){
-                    if(this._ifExist(this.polynomial[exponentSymbol+exponent])){
+                    if(this._ifNotExist(this.polynomial[exponentSymbol+exponent])){
                         this.polynomial[exponentSymbol+exponent] += parseFloat(coefficientSymbol+coefficient);
                     }
                     else{
@@ -43,7 +49,7 @@ class Polynomial {
                  
                 }
                 else{
-                    if(this._ifExist(this.polynomial['1'])){
+                    if(this._ifNotExist(this.polynomial['1'])){
                         this.polynomial['1'] += parseFloat(coefficientSymbol+coefficient);
                     }
                     else{
@@ -54,7 +60,7 @@ class Polynomial {
                 
             }
             else{
-                if(this._ifExist(this.polynomial['0'])){
+                if(this._ifNotExist(this.polynomial['0'])){
                     this.polynomial['0'] += parseFloat(coefficientSymbol+coefficient);
                 }
                 else{
@@ -64,6 +70,7 @@ class Polynomial {
                 
             
           }
+        
     }
 
    
@@ -96,11 +103,13 @@ class Polynomial {
                  poly += `^${key}`;
              }
         });
-        
+    
+      
        return poly;
     }
+    
 
-    _ifExist(value){
+    _ifNotExist(value){
         return typeof value !== 'undefined' ;
     }
     _ifVariableContainsCoefficient(variable){
@@ -108,23 +117,26 @@ class Polynomial {
     }
 
     _sort(){
-        
        this.exponentsOrder= [];
 
         for (const [key, value] of Object.entries(this.polynomial)) {
+            if(value === 0){
+                delete this.polynomial[key];
+                return;
+            }
             this.exponentsOrder.push(key);
 
         }
 
-        this.exponentsOrder.sort( (a,b) => parseFloat(b) - parseFloat(a));
-    
-       
-       
-        
+        this.exponentsOrder.sort( (a,b) =>{
+           return parseFloat(b) - parseFloat(a)
+        });
     }
 
 
 
 }
+
+
 
 export default Polynomial;

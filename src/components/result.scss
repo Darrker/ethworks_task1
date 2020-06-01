@@ -1,4 +1,17 @@
 .result{
     margin-top: 40px;
     color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__reset-button{
+        background-color: #bc5858;
+        font-size: .8rem;
+        font-weight: 600;;
+        color: white;
+        padding:  15px;
+        border-width: 0;;
+    }
+
 }
