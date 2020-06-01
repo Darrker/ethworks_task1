@@ -1,10 +1,9 @@
-
-
 class Polynomial {
     polynomial = {};
     exponentsOrder =[];
 
-   regex = /([+-])\s?(\d*\.?\d*x?)\^?([+-])?\s?(\d*\.?\d*)/g;
+   //regex = /([+-])(\d*\.?\d*x?)\^?([+-])?(\d*\.?\d*)/g;
+    regex = /([+-])\s?(?:(?:(\d*\.?\d*x)\^([+-]?)(\d*\.?\d*))|((?:\d*\.?\d*x)|(?:\d+))|(?:x))/g;
     constructor(polynomial){
 
         this.add(polynomial);
@@ -12,65 +11,67 @@ class Polynomial {
 
     add(polynomial){
         let regex = this.regex;
-        let search;
+      
         if(/^[\d|x]/g.test(polynomial)){
             polynomial = `+${polynomial}`;
         }
-        while(search=regex.exec(polynomial)){
+        let search = regex.exec(polynomial);
+        while(search){
             this._analize(search);
+            search=regex.exec(polynomial)
           
         }
     }
     _analize(value){
-          let coefficientSymbol = this._ifNotExist(value[1]) ? value[1] :  '';
-          let coefficient = this._ifNotExist(value[2]) ? value[2] : false ;
-          let exponentSymbol = this._ifNotExist(value[3])&& value[3] === '-' ?  value[3] : '' ;
-          let exponent = this._ifNotExist(value[4]) ? value[4] : false ;
+        let coefficientSymbol = this._ifExist(value[1]) ? value[1] :  '';
+        let coefficient = this._ifExist(value[2]) ? value[2] : this._ifExist(value[5]) ? value[5] : false  ;
+        let exponentSymbol = this._ifExist(value[3])&& value[3] === '-' ?  value[3] : '' ;
+        let exponent = this._ifExist(value[4]) ? value[4] : false ;
+        if(coefficient){
+          var ifCoefficientHasVariable = coefficient.includes('x'); 
+          var ifVariableContainsCoefficient = /\d/.test(coefficient)
         
-          if(coefficient){
-            var ifCoefficientHasVariable = coefficient.includes('x'); 
+          if(ifCoefficientHasVariable){
+      
+              if(ifVariableContainsCoefficient){
+                  coefficient = coefficient.slice(0,-1) ;
+               }
+               else{
+                  coefficient = 1;
+               }
 
-            if(ifCoefficientHasVariable){
-                if(this._ifVariableContainsCoefficient(value[2])){
-                    coefficient = coefficient.slice(0,-1) ;
-                
-                 }
-                 else{
-                    coefficient = 1;
-                 }
+               if(exponent){
+                  if(this._ifExist(this.polynomial[exponentSymbol+exponent])){
+                      this.polynomial[exponentSymbol+parseFloat(exponent)] += parseFloat(coefficientSymbol+coefficient);
+                  }
+                  else{
+                      this.polynomial[exponentSymbol+parseFloat(exponent)] = parseFloat(coefficientSymbol+coefficient);
+                  }
+               
+              }
+              else{
+                  if(this._ifExist(this.polynomial['1'])){
+                      this.polynomial['1'] += parseFloat(coefficientSymbol+coefficient);
+                  }
+                  else{
+                      this.polynomial['1'] = parseFloat(coefficientSymbol+coefficient);
+                  }
+              }
 
-                 if(exponent){
-                    if(this._ifNotExist(this.polynomial[exponentSymbol+exponent])){
-                        this.polynomial[exponentSymbol+exponent] += parseFloat(coefficientSymbol+coefficient);
-                    }
-                    else{
-                        this.polynomial[exponentSymbol+exponent] = parseFloat(coefficientSymbol+coefficient);
-                    }
-                 
-                }
-                else{
-                    if(this._ifNotExist(this.polynomial['1'])){
-                        this.polynomial['1'] += parseFloat(coefficientSymbol+coefficient);
-                    }
-                    else{
-                        this.polynomial['1'] = parseFloat(coefficientSymbol+coefficient);
-                    }
-                }
-
-                
-            }
-            else{
-                if(this._ifNotExist(this.polynomial['0'])){
-                    this.polynomial['0'] += parseFloat(coefficientSymbol+coefficient);
-                }
-                else{
-                    this.polynomial['0'] = parseFloat(coefficientSymbol+coefficient);
-                }
-            }
-                
-            
+              
           }
-        
+          else{
+              if(this._ifExist(this.polynomial['0'])){
+                  this.polynomial['0'] += parseFloat(coefficientSymbol+coefficient);
+              }
+              else{
+                  this.polynomial['0'] = parseFloat(coefficientSymbol+coefficient);
+              }
+          }
+              
+          
+        }
+      
     }
 
    
@@ -104,18 +105,17 @@ class Polynomial {
              }
         });
     
-      
+        if(/^[+]/g.test(poly)){
+            poly = poly.slice(1, poly.length);
+        }
        return poly;
     }
     
 
-    _ifNotExist(value){
+    _ifExist(value){
         return typeof value !== 'undefined' ;
     }
-    _ifVariableContainsCoefficient(variable){
-        return /\d/.test(variable);
-    }
-
+ 
     _sort(){
        this.exponentsOrder= [];
 

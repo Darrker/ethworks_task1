@@ -1,68 +1,37 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Ethworks Task 1
 
-## Available Scripts
+## Task Description
+Write a function to add two simple mathematical expressions which are of the form Ax^a + Bx^b + … (where the coefficients and exponents can be any positive or negative real
+number).  
+ That is, the expression is a sequence of terms, where each term is simply a constant
+times a variable to an exponent. You don't have to do string parsing, so you can use whatever
+data structure you'd like to hold the expressions.
 
-In the project directory, you can run:
+### Example:
+For input with two expressions:
+- > 2x^2 + 3
 
-### `npm start`
+- > 3x^3 + x^2
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Provide the output:
+- > 3x^3 + 2x^2 +3
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## How to run my solution?
+- > npm install
+- > npm start
 
-### `npm test`
+## How to use?
+1. Type a polynomial, you can use x, x^2 convention
+2. Remember use operator (+,-)
+3. Under an input there is the draft of your polynomial
+4. If everthing is okey, click "Add" - your polynomial is saved below
+5. Back to 1 and add an another part :)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Test
+- > npm test
 
-### `npm run build`
+## Build
+- > npm run build
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Author: Radosław Makosz
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

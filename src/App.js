@@ -44,9 +44,9 @@ class App extends React.Component{
         <div className="app__tutorial">
           <h2>How to use?</h2>
           <ol className="app__tutorial__list">
-            <li>Type a polynomial, you can use x, x^2 or x2 convention</li>
+            <li>Type a polynomial, you can use x, x^2 convention</li>
             <li>Remember use operator (+,-)</li>
-            <li>Under an input is the draft of your polynomial</li>
+            <li>Under an input there is the draft of your polynomial</li>
             <li>If everthing is okey, click "Add" - your polynomial is saved below</li>
             <li>Back to 1 and add an another part :)</li>
           </ol>
